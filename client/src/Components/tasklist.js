@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios'
 class TaskList extends React.Component{
+    audio = new Audio("/building-finished---clash-of-clans-made-with-Voicemod-technology.mp3")
+    playAudio = () => {
+        this.audio.play()
+    }
     state = { /*definitions of states must be done outside of the render() in order for it to be defined*/
         task : "" ,/* use semicolon instead of equals for assigning values to methods within the state class.*/
         taskList: []
@@ -16,6 +20,7 @@ class TaskList extends React.Component{
             then you need to set state with the value of taskList with response and having response be assigned to it.*/
     } 
     onDeleteClick = task_id => { /*onDeleteClick variable contains the entire function and when called will do what is defined*/
+        this.playAudio()
         axios.delete(`http://localhost:4000/deleteTask/${task_id}`) /*use delete to delete server resources.*/
         .then((response) => {
             this.getTaskList()
@@ -29,7 +34,9 @@ class TaskList extends React.Component{
         }).then((response) => {
             this.getTaskList()
         });
-        
+        this.setState({
+            task: ''
+        })
     }
     render()/*className is using the library imported from index.html,styles for elements other than buttons must be done in divs*/
     {
